@@ -1,0 +1,19 @@
+{
+  "base": {
+    "project": "Vitalpartners Tests",
+    "environment": "Selenoid",
+    "allureFolder": "allure-report",
+    "logo": "https://allurereports.com/images/allure-logo.png",
+    "reportLink": "https://jenkins.autotests.cloud/view/java_students/job/40_chudova_Vitalpartners_AutoTests//allure/",
+    "language": "ru",
+    "enableChart": true,
+    "comment": "Запуск тестов в Jenkins завершен",
+    "durationFormat": "HH:mm:ss.SSS",
+    "enableSuitesPublishing": false
+  },
+  "telegram": {
+    "token": "8680085986:AAH3aBl1fUFUi2lxHe1_oR6kx8ai4Os4BjM",
+    "chat": "-5181859823",
+    "replyTo": ""
+  }
+}
