@@ -89,8 +89,7 @@
 Использование Selenoid позволяет не только наблюдать за тестами в реальном времени, но и автоматически записывать видео каждого прогона. Это значительно ускоряет анализ причин падения тестов.
 
 <p align="center">
-  <video width="800" controls>
-    <source src="./media/video1.mp4" type="video/mp4">
+  <video src="https://github.com/user-attachments/assets/80ec1305-21e8-41a4-b181-9a6b3abd5a0c" width="800" controls muted>
   </video>
 </p>
 ---
