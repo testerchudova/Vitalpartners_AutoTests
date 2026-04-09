@@ -17,10 +17,6 @@ public class RandomUtils {
         return fakerRu.name().lastName();
     }
 
-    public String getRandomCompany() {
-        return "ООО " + fakerRu.company().bs();
-    }
-
     public String getRandomEmail() {
         return fakerEn.internet().emailAddress();
     }

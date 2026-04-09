@@ -1,6 +1,5 @@
 package tests;
 
-import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
@@ -24,25 +23,18 @@ public class VitalpartnersTests extends TestBaseJenk {
     void fullSuccessFlowWithReturnTest() {
         TestData data = new TestData();
 
-        Allure.step("Заполнить форму всеми валидными данными", () -> {
-            pricesPage.openPage()
-                    .setName(data.fullName)
-                    .setCompany(data.company)
-                    .setSearchSubject(data.searchSubject)
-                    .setPhone(data.phone)
-                    .setEmail(data.email);
-        });
+        pricesPage.openPage()
+                .setName(data.fullName)
+                .setCompany(data.company)
+                .setSearchSubject(data.searchSubject)
+                .setPhone(data.phone)
+                .setEmail(data.email)
+                .submitForm();
 
-        Allure.step("Отправить форму", pricesPage::submitForm);
+        pricesPage.checkSuccessResult("Запрос отправлен")
+                .returnToForm();
 
-        Allure.step("Проверить успех и нажать 'Вернуться'", () -> {
-            pricesPage.checkSuccessResult("Запрос отправлен")
-                    .returnToForm();
-        });
-
-        Allure.step("Проверить, что форма очищена и готова к новому вводу", () -> {
-            pricesPage.checkFieldsAreEmpty();
-        });
+        pricesPage.checkFieldsAreEmpty();
     }
 
     @Test
@@ -51,21 +43,15 @@ public class VitalpartnersTests extends TestBaseJenk {
     void negativeEmptySearchSubjectTest() {
         TestData data = new TestData();
 
-        Allure.step("Заполнить все поля, кроме 'Кого нужно найти'", () -> {
-            pricesPage.openPage()
-                    .setName(data.fullName)
-                    .setCompany(data.company)
-                    .setPhone(data.phone)
-                    .setEmail(data.email);
-        });
+        pricesPage.openPage()
+                .setName(data.fullName)
+                .setCompany(data.company)
+                .setPhone(data.phone)
+                .setEmail(data.email)
+                .submitForm();
 
-        Allure.step("Нажать кнопку отправить", pricesPage::submitForm);
-
-        Allure.step("Проверить валидацию поля", () -> {
-            pricesPage
-                    .checkSearchForFieldIsRequired()
-                    .checkSuccessNotVisible();
-        });
+        pricesPage.checkSearchForFieldIsRequired()
+                .checkSuccessNotVisible();
     }
 
     @Test
@@ -73,15 +59,14 @@ public class VitalpartnersTests extends TestBaseJenk {
     @DisplayName("Ошибка: Некорректный формат Email (без @)")
     void negativeInvalidEmailFormatTest() {
         TestData data = new TestData();
+
         pricesPage.openPage()
                 .setName(data.fullName)
                 .setEmail("wrong_format_mail.com") // Нет собаки
                 .submitForm();
 
-        Allure.step("Проверить, что браузер заблокировал отправку", () -> {
-            pricesPage.checkEmailIsInvalid();
-            pricesPage.checkSuccessNotVisible();
-        });
+        pricesPage.checkEmailIsInvalid();
+        pricesPage.checkSuccessNotVisible();
     }
 
     @Test
@@ -89,6 +74,7 @@ public class VitalpartnersTests extends TestBaseJenk {
     @DisplayName("Ошибка: Пустое поле Email")
     void negativeEmptyEmailTest() {
         TestData data = new TestData();
+
         pricesPage.openPage()
                 .setName(data.fullName)
                 .setSearchSubject(data.searchSubject)
@@ -107,18 +93,14 @@ public class VitalpartnersTests extends TestBaseJenk {
     void negativePhoneWithLettersTest() {
         TestData data = new TestData();
 
-        Allure.step("Ввести текст в поле телефона", () -> {
-            pricesPage.openPage()
-                    .setName(data.fullName)
-                    .setPhone(data.fullName) // Передаем имя вместо цифр
-                    .setEmail(data.email)
-                    .setSearchSubject(data.searchSubject);
-        });
+        pricesPage.openPage()
+                .setName(data.fullName)
+                .setPhone(data.fullName) // имя вместо цифр
+                .setEmail(data.email)
+                .setSearchSubject(data.searchSubject)
+                .submitForm();
 
-        Allure.step("Отправить форму и проверить ошибку", () -> {
-            pricesPage.submitForm();
-            pricesPage.checkErrorIsVisible();
-        });
+        pricesPage.checkErrorIsVisible();
     }
 
     @Test
@@ -126,6 +108,7 @@ public class VitalpartnersTests extends TestBaseJenk {
     @DisplayName("Ошибка: Пустое поле 'Как вас зовут'")
     void negativeEmptyNameTest() {
         TestData data = new TestData();
+
         pricesPage.openPage()
                 .setPhone(data.phone)
                 .setEmail(data.email)
@@ -139,15 +122,11 @@ public class VitalpartnersTests extends TestBaseJenk {
     @Tag("Negative")
     @DisplayName("Ошибка при отправке абсолютно пустой формы")
     void negativeEmptyFormTest() {
-        Allure.step("Открыть страницу и сразу нажать отправить", () -> {
-            pricesPage.openPage()
-                    .submitForm();
-        });
+        pricesPage.openPage()
+                .submitForm();
 
-        Allure.step("Проверить, что поля помечены как обязательные и форма не ушла", () -> {
-            pricesPage.checkNameIsRequired()
-                    .checkSearchForFieldIsRequired()
-                    .checkSuccessNotVisible();
-        });
+        pricesPage.checkNameIsRequired()
+                .checkSearchForFieldIsRequired()
+                .checkSuccessNotVisible();
     }
 }
